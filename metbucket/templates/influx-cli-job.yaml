@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: influxdb-cli-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: influxdb-cli
+        image: influxdb:2.6.1
+        env:
+        - name: INFLUXDB2_TOKEN
+          value: "qp7BoN2JdcCWkb5UQPcnlYNO7HW5gXIxichHRNH49gg7gq8vs0QD1lGU80wfQyAIwROxtUjcJLxj0xGRaWgrDA=="
+        command: [ "influx" ]
+        args:
+        - "bucket"
+        - "create"
+        - "--skip-verify"
+        - "--name"
+        - "telegraf"
+        - "--retention"
+        - "30d"
+        - "--org"
+        - "iosmcn"
+        - "--host"
+        - "http://influxdb2:8086"
+        - "--token"
+        - "qp7BoN2JdcCWkb5UQPcnlYNO7HW5gXIxichHRNH49gg7gq8vs0QD1lGU80wfQyAIwROxtUjcJLxj0xGRaWgrDA=="
+      restartPolicy: Never
+  backoffLimit: 4
+
